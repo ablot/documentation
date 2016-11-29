@@ -34,14 +34,14 @@ satisfying nearly all dependencies of ACQ4.
   The Installer will ask whether to add Anaconda to the PATH environment variable; we recommend _disabling_ this option
   for the 32-bit install.
 
-* ACQ4 depende on PyQt4, but the more recent versions of Aanconda ship with PyQt5 by default. It is necessary to downgrade this package:
+* ACQ4 depends on PyQt4, but the more recent versions of Aanconda (starting with 4.2.0) ship with PyQt5 by default. It is necessary to downgrade this package:
 
             > conda install pyqt=4
 
 * If you require access to a serial device (Scientifica, Coherent, Sutter, etc.) then you must manually install the `pyserial`
-  module using pip:
+  module using pip or conda:
 
-            > conda install pyserial
+            > pip install pyserial
 
 * Install git (www.git-scm.com) and then clone the acq4 git repository. This downloads all current code into a new directory called
   `acq4`::
