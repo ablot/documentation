@@ -68,7 +68,7 @@ How to Build a New Module
    Option 4: If you are _not_ running ACQ4 directly (for example, you have your own main script from which you are importing acq4), then
    you are free to ensure that your module classes are imported any way you like.
 
-#. If your module creates a Qt window, give the module a window() method that returns a reference to the window. This allows ACQ4 to assign window keyboard shortcuts:
+#. If your module creates a Qt window, give the module a window() method that returns a reference to the window. This allows ACQ4 to assign window keyboard shortcuts::
 
     def window(self):
         return self._win
