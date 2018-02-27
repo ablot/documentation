@@ -66,6 +66,7 @@ Further notes about this syntax:
     * Finally, you may add comments to .cfg if they are preceded with a hash (#) symbol
     
     
+.. _userConfigurationStructure:
 
 Configuration Structure
 -----------------------
@@ -73,8 +74,10 @@ Configuration Structure
 When ACQ4 first starts, it searches a few default locations for a file named 'default.cfg' (it is possible to override this with the ``-c`` flag). The structure of this file should look like:
     
 ::
-    
+
     storageDir: "storage/dir" 
+    imports: [...]
+    execFiles: [...]
     modules:
         ...
     devices:
@@ -83,19 +86,27 @@ When ACQ4 first starts, it searches a few default locations for a file named 'de
         ...
     configurations:
         ...
-        
-In this format, the storageDir specifies the *default* location where data should be stored when no other location is specified. All other sections are discussed below:
+
+In this format:
+
+* **storageDir** specifies the *default* location where data should be stored when no other location is specified.
+* **imports** and **execFiles** specify lists of either module names to execute, or python file names to exec(), respectively. 
+  These allow custom extension code to be loaded at startup.
+
+All other sections are discussed below:
     
 .. _userConfigurationModules:
 
 Modules Configuration
 '''''''''''''''''''''
 
-Loading a module requires knowing both the name of the module and specifying a specific set of configuration options for the module to use. For example, I have a patch clamp amplifier with two channels. When I load the *Patch* module, I need to specify whether it should use channel 1 or channel 2. To make this process easier for the end user, we define a list of pre-configured modules which the user may choose from. These names appear in the Manager module as the list of loadable modules.
+After reading through the configuration files, ACQ4 displays the Manager module's user interface. Within this UI is a menu of all other UI modules that are known to ACQ4, from which the user can simply click to launch these modules. The modules configuration section described here allows customization of the entries in this menu. By default, all modules will appear once in the menu, and launching them simply invokes their default configuration. By adding entries to this configuration section, we can:
 
-The format for defining a pre-configured module is:
-    
-::
+* Change the default configuration parameters each module wil be loaded with
+* Add multiple entries for each module, with different configuration options for each entry
+* Set a keyboard shortcut that will raise the main window for each module
+
+The format for defining a pre-configured module is::
     
     UniqueName:
         module: "ModuleName"
@@ -103,24 +114,26 @@ The format for defining a pre-configured module is:
             ...config options...
         shortcut: "shortcut key"
 
-Here, *ModuleName* must refer to one of the modules defined in the directory **lib/modules**. The exact options specified under *config* will differ depending on the module being loaded. The *shortcut key* specifies a keyboard shortcut that can be used to raise the module's window (for example: 'F2', 'Ctrl+M', or 'Alt+Enter'). Taking this example, a very common module list might look like this:
-    
-::
+Here, *ModuleName* must refer to one of the :ref:`userModules` registered to ACQ4 (the builtin modules live in ``acq4/modules/``). The exact options specified under *config* will differ depending on the module being loaded. The *shortcut key* specifies a keyboard shortcut that can be used to raise the module's window (for example: 'F2', 'Ctrl+M', or 'Alt+Enter'). Taking this example, a very common module list might look like this::
     
     modules:
         Data Manager:
             module:  'DataManager'
+            # After the user loads the Data Manager module, pressing F2 will raise its window:
             shortcut: 'F2'
         Task Runner:
             module: 'TaskRunner'
             shortcut: 'F6'
             config:
-                ## Directory where Task Runner stores its saved tasks.
+                # Set the directory where Task Runner stores its saved tasks.
                 taskDir: 'config/example/tasks'
         Camera:
             module:  'Camera'
             shortcut: 'F5'
         Patch Clamp 1:
+            # We have 2 patch clamp devices, but the Patch module only supports 1 at a time.
+            # Therefore, we make two menu entries for this module, with a different device
+            # configured for each entry.
             module: 'Patch'
             shortcut: 'F3'
             config:
@@ -130,8 +143,6 @@ Here, *ModuleName* must refer to one of the modules defined in the directory **l
             shortcut: 'F4'
             config:
                 clampDev: 'Clamp2'
-
-Note in this example that the name 'Camera' is used 3 times to refer to 3 different things: 1) the name of the preconfigured module that will appear in the Manager user interface, 2) the name of the python module to load (ie, acq4.modules.Camera), and 3) the name of the camera device that should be used by this module when it is loaded.
 
 
 .. _userConfigurationDevices:
@@ -213,6 +224,11 @@ In the example above, the three names would appear in the Manager module as load
 
 Miscellaneous Options
 '''''''''''''''''''''
+
+*imports* is an optional list of extra Python modules to import. This may be used to load any custom extensions when ACQ4 starts.
+
+*execFiles* is an alternative to *imports* that lists the full paths of Python files to execute. These may be used to load custom extensions
+without requiring the files to be importable modules.
 
 *defaultCompression* defines the HDF5 compression filter and options used by default. Modules are encouraged to use this default value, but in some cases may specify a different compression filter. Options are:
     

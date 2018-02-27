@@ -5,7 +5,7 @@ How Difficult Will It Be?
 -------------------------
 
 In part, you get to decide. ACQ4 has many layers of abstraction frameworks, but you aren't required to use any of them. 
-Many services provided by the program can simply be embedded in other existing applications.
+Many services provided by the ACQ4 can simply be imported into other existing applications.
 
 
 Where Should I Start?
@@ -37,18 +37,3 @@ So we see that by operating within the ACQ4 framework, some useful services beco
 Finally, we might discover that nearly everything we want to do with our new hardware is very similar to ACQ4's existing camera functionality. In this case, it would be best to implement a Device class that is also a subclass of Camera (which is itself a subclass of Device). By doing so, we can use our new hardware in the existing camera module and we get all of the pre-written device interfaces for free. This is a vastly simpler task than implementing a completely new Device. The drawback is that it may become more difficult to use the device in ways not originally supported by the generic Camera class.
 
 To reiterate: there are a variety of options for adding new functionality to ACQ4 (only a few of which were covered here). Lower-level frameworks (such as Module) are generally easier to program at first, but higher-level frameworks, although they have a steeper learning curve, may offer power, flexibility, and features that were difficult to achieve otherwise. As always, the best place to start may be to ask the core developers for advice.
-    
-
-
-
-Code Control
-------------
-
-DVCS, BZR, Launchpad
-
-
-
-
-
-
-

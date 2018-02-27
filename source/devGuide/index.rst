@@ -1,8 +1,6 @@
 Developer's Guide
 =================
 
-(coming soon: more developers guide!)
-
 Contents:
 
 .. toctree::
