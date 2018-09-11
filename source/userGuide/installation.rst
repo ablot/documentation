@@ -20,7 +20,7 @@ You also need to make sure that the drivers for your devices are installed and w
 
 
 Windows / OSX Installation
---------------------
+--------------------------
 
 For Windows and OSX we recommend using the Anaconda python distribution because it contains prebuilt packages
 satisfying nearly all dependencies of ACQ4.
@@ -29,14 +29,14 @@ satisfying nearly all dependencies of ACQ4.
   The Installer will ask whether to add Anaconda to the PATH environment variable; we recommend _enabling_ this option
   for the 64-bit install although it is not strictly required.
 
-* If you have a device for which only 32-bit drivers are available (such as MultiClamp or P.I. X-Keys), then you
-  will need to install the 32-bit, Python 2.7 Anaconda as well. 
+* If you have a device for which only 32-bit drivers are available (such as MultiClamp [but see `here <https://groups.google.com/forum/#!msg/acq4/JuMsU2dBjYA/27DH8G2sCQAJ>`_] or P.I. X-Keys), then you
+  will need to install the 32-bit, Python 2.7 Anaconda as well.
   The Installer will ask whether to add Anaconda to the PATH environment variable; we recommend _disabling_ this option
   for the 32-bit install.
 
-* ACQ4 depends on PyQt4, but the more recent versions of Aanconda (starting with 4.2.0) ship with PyQt5 by default. It is necessary to downgrade this package:
+* ACQ4 depends on PyQt4, but the more recent versions of Anaconda (starting with 4.2.0) ship with PyQt5 by default. It is necessary to downgrade this package:
 
-            > conda install pyqt=4
+            > conda install pyqt=4 pyparsing=2.0.3
 
 * If you require access to a serial device (Scientifica, Coherent, Sutter, etc.) then you must manually install the `pyserial`
   module using pip or conda:
